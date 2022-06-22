@@ -1,18 +1,27 @@
 package SIG.View;
 
 import SIG.Controller.Actions;
+import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.table.DefaultTableModel;
 
 
 /*
@@ -246,19 +255,24 @@ public class Invoice extends javax.swing.JFrame {
     private void createInvoiceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createInvoiceBtnActionPerformed
         // TODO add your handling code here:
         try {
-            FileOutputStream fileStream = new FileOutputStream("D:/csvcreate.csv");
-            OutputStreamWriter writer = new OutputStreamWriter(fileStream);
-            CSVWriter csvwrite = new CSVWriter(writer);
-            String[] header = {"Name", "Class", "Marks"};
+            String file_path = "D:/invoicehHeader.csv";
+            FileWriter mFileWriter = new FileWriter(file_path, true);
+            CSVWriter csvwrite = new CSVWriter(mFileWriter, ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+            CSVReader reader = new CSVReader(new FileReader(file_path));
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDateTime now = LocalDateTime.now();
+            List allExcel = reader.readAll();
+            String[] header = {String.valueOf(allExcel.size() + 1), dtf.format(now), "shokry", "0"};
             List<String[]> list = new ArrayList<String[]>();
-            list.add(header);
             list.add(header);
             csvwrite.writeAll(list);
             csvwrite.close();
-            writer.close();
-            fileStream.close();
             System.out.println("File Created successfully");
 
+            fetchAllInvoices();
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -277,6 +291,31 @@ public class Invoice extends javax.swing.JFrame {
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
 
+    }
+
+    private void fetchAllInvoices() {
+
+        try {
+//            List<String[]> list = new ArrayList<String[]>();
+            DefaultTableModel dtm = new DefaultTableModel(0, 4);
+
+            //Instantiating the CSVReader class
+            CSVReader reader = new CSVReader(new FileReader("D:/invoicehHeader.csv"));
+            //Reading the contents of the csv file
+            List excelSheet = reader.readAll();
+            //Getting the Iterator object
+            Iterator it = excelSheet.iterator();
+            Header.setModel(dtm);
+            while (it.hasNext()) {
+                String[] str = (String[]) it.next();
+                System.out.println(str[0].split(";"));
+                dtm.addRow(str[0].split(";"));
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
