@@ -236,6 +236,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel5"/>
       </Properties>
+      <Events>
+        <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="numberLabelInputMethodTextChanged"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="CustomerLabel">
       <Properties>

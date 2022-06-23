@@ -5,11 +5,13 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import static java.lang.String.valueOf;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -121,6 +123,13 @@ public class Invoice extends javax.swing.JFrame {
         Totalbtn.setText("Total");
 
         numberLabel.setText("jLabel5");
+        numberLabel.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                numberLabelInputMethodTextChanged(evt);
+            }
+        });
 
         CustomerLabel.setText("jLabel6");
 
@@ -244,15 +253,12 @@ public class Invoice extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+  
+  
+    
+    
+    
     private void LoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LoadActionPerformed
-
-    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DeleteButtonActionPerformed
-
-    private void createInvoiceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createInvoiceBtnActionPerformed
         // TODO add your handling code here:
         try {
             String file_path = "D:/invoicehHeader.csv";
@@ -265,18 +271,55 @@ public class Invoice extends javax.swing.JFrame {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDateTime now = LocalDateTime.now();
             List allExcel = reader.readAll();
-            String[] header = {String.valueOf(allExcel.size() + 1), dtf.format(now), "shokry", "0"};
+            String[] header = {String.valueOf(allExcel.size() + 1), dtf.format(now), "menna", "2"};
             List<String[]> list = new ArrayList<String[]>();
             list.add(header);
             csvwrite.writeAll(list);
             csvwrite.close();
             System.out.println("File Created successfully");
 
+             
+        
             fetchAllInvoices();
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
         }
+    }//GEN-LAST:event_LoadActionPerformed
+
+    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DeleteButtonActionPerformed
+
+    private void createInvoiceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createInvoiceBtnActionPerformed
+        
+
+        
+          try {
+            String file_path = "D:/invoicehLine.csv";
+            FileWriter mFileWriter = new FileWriter(file_path, true);
+            CSVWriter csvwrite = new CSVWriter(mFileWriter, ';',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+            CSVReader reader = new CSVReader(new FileReader(file_path));
+            
+            List allExcel = reader.readAll();
+            String[] line= {String.valueOf(allExcel.size() + 1),"tea ", "5 LE", "2","10"};
+            List<String[]> list = new ArrayList<String[]>();
+            list.add(line);
+            csvwrite.writeAll(list);
+            csvwrite.close();
+            System.out.println("File Created successfully");
+
+             
+        
+            fetchLineInvoices();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+       
     }//GEN-LAST:event_createInvoiceBtnActionPerformed
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
@@ -285,18 +328,22 @@ public class Invoice extends javax.swing.JFrame {
 
     private void FileMenueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileMenueActionPerformed
         // TODO add your handling code here:
-
-
     }//GEN-LAST:event_FileMenueActionPerformed
+
+    private void numberLabelInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_numberLabelInputMethodTextChanged
+  
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numberLabelInputMethodTextChanged
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-
     }
 
     private void fetchAllInvoices() {
 
         try {
 //            List<String[]> list = new ArrayList<String[]>();
+
+   
             DefaultTableModel dtm = new DefaultTableModel(0, 4);
 
             //Instantiating the CSVReader class
@@ -306,6 +353,33 @@ public class Invoice extends javax.swing.JFrame {
             //Getting the Iterator object
             Iterator it = excelSheet.iterator();
             Header.setModel(dtm);
+            while (it.hasNext()) {
+                String[] str = (String[]) it.next();
+                System.out.println(str[0].split(";"));
+                dtm.addRow(str[0].split(";"));
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+     private void fetchLineInvoices() {
+
+        try {
+//            List<String[]> list = new ArrayList<String[]>();
+
+   
+            DefaultTableModel dtm = new DefaultTableModel(0, 5);
+
+            //Instantiating the CSVReader class
+            CSVReader reader = new CSVReader(new FileReader("D:/invoicehLine.csv"));
+            //Reading the contents of the csv file
+            List excelSheet = reader.readAll();
+            //Getting the Iterator object
+            Iterator it = excelSheet.iterator();
+            Line.setModel(dtm);
             while (it.hasNext()) {
                 String[] str = (String[]) it.next();
                 System.out.println(str[0].split(";"));

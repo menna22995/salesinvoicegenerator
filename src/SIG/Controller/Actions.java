@@ -43,9 +43,9 @@ public class Actions extends JFrame implements ActionListener {
                 createInvoiceBtn(e);
                 break;
 
-//            case "Delete Invoice":
-//              DeleteButton();
-//                break;
+            case "Delete Invoice":
+              DeleteButton();
+                break;
             case "Save":
                 SaveButton();
                 break;
@@ -133,54 +133,23 @@ public class Actions extends JFrame implements ActionListener {
     }
 
     private void CancelButton() {
-//   System.exit(0);
+   System.exit(0);
     }
 
     private void createInvoiceBtn(ActionEvent e) {
-        System.out.println("inside");
+        System.out.println("");
     }
 
-//    private void Newbtn(String filePath) {
-//    
-//	// first create file object for file placed at location
-//	// specified by filepath
-//	File file = new File(filePath);
-//	try {
-//		// create FileWriter object with file as parameter
-//		FileWriter outputfile = new FileWriter(file);
-//
-//		// create CSVWriter object filewriter object as parameter
-//		CSVWriter writer = new CSVWriter(outputfile);
-//
-//		// adding header to csv
-//		String[] header = { "Name", "Class", "Marks" };
-//		writer.writeNext(header);
-//
-//		// add data to csv
-//		String[] data1 = { "Aman", "10", "620" };
-//		writer.writeNext(data1);
-//		String[] data2 = { "Suraj", "10", "630" };
-//		writer.writeNext(data2);
-//
-//		// closing writer connection
-//		writer.close();
-//	}
-//	catch (IOException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
-//}
-//
-//    private void DeleteButton() {
-//
-//         File file
-//            = new File("C:\\Users\\Mayank\\Desktop\\1.txt");
-// 
-//        if (file.delete()) {
-//            System.out.println("File deleted successfully");
-//        }
-//        else {
-//            System.out.println("Failed to delete the file");
-//        }
-//    }
+
+    private void DeleteButton() {
+     try  {         
+    File f= new File("D:/invoicehHeader.csv");           
+    if(f.delete())                       
+            {   System.out.println(f.getName() + " deleted");   }  
+    else  {  System.out.println("failed"); }  
+    }  
+    catch(Exception e)  
+    {    e.printStackTrace();   }
+        
+    }
 }

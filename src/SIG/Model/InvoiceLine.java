@@ -10,6 +10,8 @@ package SIG.Model;
  */
 public class InvoiceLine {
 
+
+
     private final int total;
 
     public InvoiceLine(InvoiceHeader invoice, String name, double price, int count ,int total) {
