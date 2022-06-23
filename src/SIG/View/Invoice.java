@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -43,6 +44,7 @@ public class Invoice extends javax.swing.JFrame {
         initComponents();
     }
 
+      private JTextArea ta;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -323,7 +325,26 @@ public class Invoice extends javax.swing.JFrame {
     }//GEN-LAST:event_createInvoiceBtnActionPerformed
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser();
+        int result = fc.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            String path = fc.getSelectedFile().getPath();
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(path);
+                byte[] b = ta.getText().getBytes();
+                fos.write(b);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                }
+            }
+        }    
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     private void FileMenueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileMenueActionPerformed
@@ -334,9 +355,10 @@ public class Invoice extends javax.swing.JFrame {
   
         // TODO add your handling code here:
     }//GEN-LAST:event_numberLabelInputMethodTextChanged
-    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+   
+       
+
+    
 
     private void fetchAllInvoices() {
 
