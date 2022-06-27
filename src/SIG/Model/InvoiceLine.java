@@ -9,45 +9,41 @@ package SIG.Model;
  * @author ProBook G7
  */
 public class InvoiceLine {
-
-
-
-    private final int total;
-
-    public InvoiceLine(InvoiceHeader invoice, String name, double price, int count ,int total) {
-        this.invoice = invoice;
-        this.name = name;
-        this.price = price;
-        this.count = count;
-        this.total=total;
-    }
-    private InvoiceHeader invoice;
-    private String name;
-    private double price;
+    private String itemName ;
+    private double unitPrice;
     private int count;
+   
+   private InvoiceHeader header;
 
-    public InvoiceHeader getInvoice() {
-        return invoice;
+    public InvoiceLine(String itemName, double unitPrice, int count, InvoiceHeader header) {
+        this.itemName = itemName;
+        this.unitPrice = unitPrice;
+        this.count = count;
+        this.header = header;
     }
 
-    public void setInvoice(InvoiceHeader invoice) {
-        this.invoice = invoice;
+    public InvoiceHeader getHeader() {
+        return header;
     }
 
-    public String getName() {
-        return name;
+    public void setHeader(InvoiceHeader header) {
+        this.header = header;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public double getPrice() {
-        return price;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
     public int getCount() {
@@ -58,4 +54,16 @@ public class InvoiceLine {
         this.count = count;
     }
 
+    public double getLineTotal() {
+        return count * unitPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "InvoiceLine{" + "itemName=" + itemName + ", unitPrice=" + unitPrice + ", count=" + count + '}';
+    }
+
+   
+   
+    
 }

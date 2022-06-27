@@ -1,6 +1,8 @@
 package SIG.View;
 
 import SIG.Controller.Actions;
+import SIG.Model.InvoiceHeader;
+import SIG.Model.InvoiceHeaderModel;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import java.io.BufferedWriter;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,6 +44,8 @@ public class Invoice extends javax.swing.JFrame {
      * Creates new form Invoice
      */
     public Invoice() {
+        
+        handler=new Actions(this);
         initComponents();
     }
 
@@ -85,22 +90,13 @@ public class Invoice extends javax.swing.JFrame {
 
         Header.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "No.", "Date", "Customer", "Total"
+
             }
         ));
         jScrollPane1.setViewportView(Header);
-        if (Header.getColumnModel().getColumnCount() > 0) {
-            Header.getColumnModel().getColumn(0).setHeaderValue("No.");
-            Header.getColumnModel().getColumn(1).setHeaderValue("Date");
-            Header.getColumnModel().getColumn(2).setHeaderValue("Customer");
-            Header.getColumnModel().getColumn(3).setHeaderValue("Total");
-        }
 
         createInvoiceBtn.setText("Create New Voice");
         createInvoiceBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -141,13 +137,10 @@ public class Invoice extends javax.swing.JFrame {
 
         Line.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "No", "Item Name", "Item Price", "Count", "Item Total"
+
             }
         ));
         jScrollPane2.setViewportView(Line);
@@ -190,33 +183,36 @@ public class Invoice extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(customerbtn)
-                            .addComponent(invoicebtn)
-                            .addComponent(Datebtn)
-                            .addComponent(Totalbtn))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(customerbtn)
+                                    .addComponent(invoicebtn)
+                                    .addComponent(Datebtn)
+                                    .addComponent(Totalbtn))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(numberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                                    .addComponent(CustomerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(DateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(TotalLAbel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(createInvoiceBtn)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(numberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
-                            .addComponent(CustomerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(DateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TotalLAbel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(createInvoiceBtn)
-                .addGap(18, 18, 18)
-                .addComponent(DeleteButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addComponent(SaveButton)
-                .addGap(80, 80, 80)
-                .addComponent(CancelButton)
-                .addGap(73, 73, 73))
+                        .addComponent(DeleteButton)
+                        .addGap(39, 39, 39)
+                        .addComponent(SaveButton)
+                        .addGap(108, 108, 108)
+                        .addComponent(CancelButton)))
+                .addContainerGap(285, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,7 +235,7 @@ public class Invoice extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Totalbtn)
                             .addComponent(TotalLAbel))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -262,31 +258,7 @@ public class Invoice extends javax.swing.JFrame {
     
     private void LoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadActionPerformed
         // TODO add your handling code here:
-        try {
-            String file_path = "D:/invoicehHeader.csv";
-            FileWriter mFileWriter = new FileWriter(file_path, true);
-            CSVWriter csvwrite = new CSVWriter(mFileWriter, ';',
-                    CSVWriter.NO_QUOTE_CHARACTER,
-                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                    CSVWriter.DEFAULT_LINE_END);
-            CSVReader reader = new CSVReader(new FileReader(file_path));
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDateTime now = LocalDateTime.now();
-            List allExcel = reader.readAll();
-            String[] header = {String.valueOf(allExcel.size() + 1), dtf.format(now), "menna", "2"};
-            List<String[]> list = new ArrayList<String[]>();
-            list.add(header);
-            csvwrite.writeAll(list);
-            csvwrite.close();
-            System.out.println("File Created successfully");
-
-             
-        
-            fetchAllInvoices();
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
+  
     }//GEN-LAST:event_LoadActionPerformed
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
@@ -473,6 +445,34 @@ public class Invoice extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel numberLabel;
     // End of variables declaration//GEN-END:variables
-private Actions handler = new Actions();
+private Actions handler ;
+private ArrayList<InvoiceHeader>invoiceHeaderList;
+private InvoiceHeaderModel headerTableModel;
+
+    public Actions getHandler() {
+        return handler;
+        
+    }
+
+   
+    public ArrayList<InvoiceHeader> getInvoiceHeaderList() {
+        return invoiceHeaderList;
+    }
+
+    public void setInvoiceHeaderList(ArrayList<InvoiceHeader> invoiceHeaderList) {
+        this.invoiceHeaderList = invoiceHeaderList;
+        headerTableModel=new InvoiceHeaderModel(invoiceHeaderList);
+        this.Header.setModel(headerTableModel);
+    }
+
+    public JTable getHeader() {
+        return Header;
+    }
+
+    public JTable getLine() {
+        return Line;
+    }
+    
+
 
 }
