@@ -137,12 +137,36 @@ public class Actions implements ActionListener, ListSelectionListener {
     }
 
     private void DeleteButton() {
-    }
+        try  
+{  
+File file = new File("C:\\Users\\AA\\Desktop\\invoiceheader.csv");             //creates a file instance  
+file.deleteOnExit();                 //deletes the file when JVM terminates  
+System.out.println("Done");  
+Thread.sleep(1000);    
+}  
+catch(Exception e)  
+{  
+e.printStackTrace();  
+}  
+}    
+   
 
     private void SaveButton() {
     }
 
     private void CancelButton() {
+                try  
+{  
+File file = new File("C:\\Users\\AA\\Desktop\\invoiceline.csv");             //creates a file instance  
+file.deleteOnExit();                 //deletes the file when JVM terminates  
+System.out.println("Done");  
+Thread.sleep(1000);    
+}  
+catch(Exception e)  
+{  
+e.printStackTrace();  
+}  
+}   
     }
 
-}
+

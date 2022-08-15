@@ -5,8 +5,7 @@
         <group>
             <file>file:/C:/Users/AA/Documents/NetBeansProjects/SalesInvoiceGenerator/src/SIG/View/Invoice.java</file>
             <file>file:/C:/Users/AA/Documents/NetBeansProjects/SalesInvoiceGenerator/src/SIG/Controller/Actions.java</file>
-            <file>file:/C:/Users/AA/Documents/NetBeansProjects/SalesInvoiceGenerator/src/SIG/Model/InvoiceHeader.java</file>
-            <file>file:/C:/Users/AA/Documents/NetBeansProjects/SalesInvoiceGenerator/src/SIG/Model/InvoiceLine.java</file>
+            <file>file:/C:/Users/AA/Documents/NetBeansProjects/SalesInvoiceGenerator/src/SIG/Model/InvoiceLineModel.java</file>
         </group>
     </open-files>
 </project-private>
