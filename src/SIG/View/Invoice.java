@@ -1,7 +1,6 @@
 package SIG.View;
 
 import SIG.Model.InvoiceHeader;
-import SIG.Model.InvoiceHeaderModel;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import java.io.BufferedWriter;
