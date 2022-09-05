@@ -42,6 +42,9 @@ public class Actions implements ActionListener, ListSelectionListener {
         this.invoice = invoice;
     }
 
+    public Actions(SIG.Controller.src.SIG.View.Invoice invoice) {
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 

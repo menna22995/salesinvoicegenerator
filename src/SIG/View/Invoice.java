@@ -1,6 +1,8 @@
-package SIG.View;
+package SIG.Controller.src.SIG.View;
 
+import SIG.Controller.Actions;
 import SIG.Model.InvoiceHeader;
+import SIG.Model.InvoiceHeaderModel;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import java.io.BufferedWriter;
@@ -443,7 +445,7 @@ public class Invoice extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel numberLabel;
     // End of variables declaration//GEN-END:variables
-private Actions handler ;
+public Actions handler ;
 private ArrayList<InvoiceHeader>invoiceHeaderList;
 private InvoiceHeaderModel headerTableModel;
 
